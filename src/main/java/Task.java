@@ -4,11 +4,11 @@ public class Task {
 
     public Task(String description) {
         this.description = description;
-        this.isDone = false; // default is not done yet
+        this.isDone = false; // default: not done
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // done = X, not done = empty
+        return (isDone ? "X" : " "); // [X] for done, [ ] for not done
     }
 
     public void markAsDone() {
