@@ -1,11 +1,11 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Karl {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        String[] tasks = new String[100]; // fixed-size array for tasks
-        int taskCount = 0;               // keeps track of how many tasks are stored
+        ArrayList<String> tasks = new ArrayList<>(); // dynamic list for tasks
 
         // chatbot intro
         printLine();
@@ -25,19 +25,18 @@ public class Karl {
             } else if (input.equalsIgnoreCase("list")) {
                 // print all tasks
                 printLine();
-                for (int i = 0; i < taskCount; i++) {
-                    System.out.println(" " + (i + 1) + ". " + tasks[i]);
-                }
-                if (taskCount == 0) {
+                if (tasks.isEmpty()) {
                     System.out.println(" (No tasks yet!)");
+                } else {
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println(" " + (i + 1) + ". " + tasks.get(i));
+                    }
                 }
                 printLine();
                 System.out.println();
             } else {
-                // store the task in array
-                tasks[taskCount] = input;
-                taskCount++;
-
+                // add new task
+                tasks.add(input);
                 printLine();
                 System.out.println(" added: " + input);
                 printLine();
@@ -48,7 +47,7 @@ public class Karl {
         sc.close();
     }
 
-    // helper formatter
+    // helper method for formatting
     private static void printLine() {
         System.out.println("____________________________________________________________");
     }
