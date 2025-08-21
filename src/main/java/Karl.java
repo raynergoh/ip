@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Karl {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
@@ -16,98 +17,140 @@ public class Karl {
         while (true) {
             String input = sc.nextLine().trim();
 
-            if (input.equalsIgnoreCase("bye")) {
-                printLine();
-                System.out.println(" Bye. Karl hopes to see you again soon!");
-                printLine();
-                break;
+            try {
+                if (input.equalsIgnoreCase("bye")) {
+                    printLine();
+                    System.out.println(" Bye. Karl hopes to see you again soon!");
+                    printLine();
+                    break;
 
-            } else if (input.equalsIgnoreCase("list")) {
-                // print tasks
-                printLine();
-                if (tasks.isEmpty()) {
-                    System.out.println(" (No tasks yet!)");
-                } else {
-                    System.out.println(" Here are the tasks in your list:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(" " + (i + 1) + ". " + tasks.get(i));
+                } else if (input.equalsIgnoreCase("list")) {
+                    printLine();
+                    if (tasks.isEmpty()) {
+                        System.out.println(" (No tasks yet!)");
+                    } else {
+                        System.out.println(" Here are the tasks in your list:");
+                        for (int i = 0; i < tasks.size(); i++) {
+                            System.out.println(" " + (i + 1) + ". " + tasks.get(i));
+                        }
                     }
-                }
-                printLine();
-                System.out.println();
+                    printLine();
+                    System.out.println();
 
-            } else if (input.startsWith("mark ")) {
-                try {
-                    int index = Integer.parseInt(input.split(" ")[1]) - 1;
-                    Task task = tasks.get(index);
+                } else if (input.startsWith("mark ")) {
+                    int index = parseIndex(input, "mark");
+                    Task task = getTask(tasks, index);
                     task.markAsDone();
                     printLine();
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println("   " + task);
                     printLine();
-                } catch (Exception e) {
-                    System.out.println(" Invalid task number!");
-                }
-                System.out.println();
+                    System.out.println();
 
-            } else if (input.startsWith("unmark ")) {
-                try {
-                    int index = Integer.parseInt(input.split(" ")[1]) - 1;
-                    Task task = tasks.get(index);
+                } else if (input.startsWith("unmark ")) {
+                    int index = parseIndex(input, "unmark");
+                    Task task = getTask(tasks, index);
                     task.markAsNotDone();
                     printLine();
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println("   " + task);
                     printLine();
-                } catch (Exception e) {
-                    System.out.println(" Invalid task number!");
-                }
-                System.out.println();
+                    System.out.println();
 
-            } else if (input.startsWith("todo ")) {
-                String desc = input.substring(5).trim();
-                Task newTask = new Todo(desc);
-                tasks.add(newTask);
-                printAddedTask(newTask, tasks.size());
+                } else if (input.startsWith("delete ")) {
+                    int index = parseIndex(input, "delete");
+                    Task removedTask = getTask(tasks, index);
+                    tasks.remove(index);
 
-            } else if (input.startsWith("deadline ")) {
-                String[] parts = input.substring(9).split(" /by ", 2);
-                String description = parts[0].trim();
-                String by = parts.length > 1 ? parts[1].trim() : "unspecified";
-                Task newTask = new Deadline(description, by);
-                tasks.add(newTask);
-                printAddedTask(newTask, tasks.size());
-
-            } else if (input.startsWith("event ")) {
-                String[] parts = input.substring(6).split(" /from ", 2);
-                String desc = parts[0].trim();
-
-                String from = "unspecified";
-                String to = "unspecified";
-
-                if (parts.length > 1) {
-                    String[] timeParts = parts[1].split(" /to ", 2);
-                    from = timeParts[0].trim();
-
-                    if (timeParts.length > 1) {
-                        to = timeParts[1].trim();
+                    printLine();
+                    System.out.println(" Noted. I've removed this task:");
+                    System.out.println("   " + removedTask);
+                    System.out.println(" Now there are " + tasks.size() + (tasks.size() == 1 ? " task" : " tasks") + " in the list.");
+                    printLine();
+                    System.out.println();
+                } else if (input.startsWith("todo")) {
+                    String desc = input.length() <= 4 ? "" : input.substring(4).trim();
+                    if (desc.isEmpty()) {
+                        throw new KarlException("I don't think the Todo description can be empty...");
                     }
+                    Task newTask = new Todo(desc);
+                    tasks.add(newTask);
+                    printAddedTask(newTask, tasks.size());
+
+                } else if (input.startsWith("deadline")) {
+                    String[] parts = input.substring(8).split(" /by ", 2);
+                    String desc = parts[0];
+                    if (desc.trim().isEmpty()) {
+                        throw new KarlException("I don't think the Deadline description can be empty...");
+                    }
+                    if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                        throw new KarlException("Deadline must have a '/by' time specified.");
+                    }
+                    Task newTask = new Deadline(desc.trim(), parts[1].trim());
+                    tasks.add(newTask);
+                    printAddedTask(newTask, tasks.size());
+
+                } else if (input.startsWith("event")) {
+                    String[] parts = input.substring(5).split(" /from ", 2);
+                    String desc = parts[0];
+                    if (desc.trim().isEmpty()) {
+                        throw new KarlException("I don't think the Event description can be empty...");
+                    }
+                    if (parts.length < 2) {
+                        throw new KarlException("Event must have a '/from' time specified.");
+                    }
+                    String[] timeParts = parts[1].split(" /to ", 2);
+                    if (timeParts.length < 2) {
+                        throw new KarlException("Event must have a '/to' time specified.");
+                    }
+                    Task newTask = new Event(desc.trim(), timeParts[0].trim(), timeParts[1].trim());
+                    tasks.add(newTask);
+                    printAddedTask(newTask, tasks.size());
+
+                } else {
+                    // unknown command
+                    printLine();
+                    System.out.println(" Karl didn’t understand that command 😅");
+                    printLine();
+                    System.out.println();
                 }
-
-                Task newTask = new Event(desc, from, to);
-                tasks.add(newTask);
-                printAddedTask(newTask, tasks.size());
-
-            } else {
-                // unknown input
+            } catch (KarlException e) {
                 printLine();
-                System.out.println(" Karl didn’t understand that command 😅");
+                System.out.println(" " + e.getMessage());
+                printLine();
+                System.out.println();
+            } catch (Exception e) {
+                printLine();
+                System.out.println(" Something went wrong: " + e.getMessage());
                 printLine();
                 System.out.println();
             }
         }
 
         sc.close();
+    }
+
+    private static int parseIndex(String input, String command) throws KarlException {
+        String[] tokens = input.split(" ");
+        if (tokens.length < 2) {
+            throw new KarlException("You must specify the task number to " + command + ".");
+        }
+        try {
+            int index = Integer.parseInt(tokens[1]) - 1;
+            if (index < 0) {
+                throw new KarlException("Task number must be a positive integer.");
+            }
+            return index;
+        } catch (NumberFormatException e) {
+            throw new KarlException("Invalid task number format.");
+        }
+    }
+
+    private static Task getTask(ArrayList<Task> tasks, int index) throws KarlException {
+        if (index >= tasks.size()) {
+            throw new KarlException("Task number out of range.");
+        }
+        return tasks.get(index);
     }
 
     // helper method for pretty printing

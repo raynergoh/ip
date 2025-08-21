@@ -1,4 +1,5 @@
-package PACKAGE_NAME;
-
-public class KarlException {
+public class KarlException extends Exception {
+    public KarlException(String message) {
+        super(message);
+    }
 }
