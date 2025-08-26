@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.format.DateTimeParseException;
 
 public class Karl {
 
@@ -92,10 +93,14 @@ public class Karl {
                     if (parts.length < 2 || parts[1].trim().isEmpty()) {
                         throw new KarlException("Deadline must have a '/by' time specified.");
                     }
-                    Task newTask = new Deadline(desc.trim(), parts[1].trim());
-                    tasks.add(newTask);
-                    Storage.saveTasks(tasks);
-                    printAddedTask(newTask, tasks.size());
+                    try {
+                        Task newTask = new Deadline(desc.trim(), parts[1].trim()); // Deadline constructor parses LocalDate
+                        tasks.add(newTask);
+                        Storage.saveTasks(tasks);
+                        printAddedTask(newTask, tasks.size());
+                    } catch (DateTimeParseException e) {
+                        throw new KarlException("Please enter deadline date in yyyy-MM-dd format.");
+                    }
 
                 } else if (input.startsWith("event")) {
                     String[] parts = input.substring(5).split(" /from ", 2);
@@ -110,13 +115,16 @@ public class Karl {
                     if (timeParts.length < 2) {
                         throw new KarlException("Event must have a '/to' time specified.");
                     }
-                    Task newTask = new Event(desc.trim(), timeParts[0].trim(), timeParts[1].trim());
-                    tasks.add(newTask);
-                    Storage.saveTasks(tasks);
-                    printAddedTask(newTask, tasks.size());
+                    try {
+                        Task newTask = new Event(desc.trim(), timeParts[0].trim(), timeParts[1].trim()); // Event constructor parses LocalDate
+                        tasks.add(newTask);
+                        Storage.saveTasks(tasks);
+                        printAddedTask(newTask, tasks.size());
+                    } catch (DateTimeParseException e) {
+                        throw new KarlException("Please enter event dates in yyyy-MM-dd format.");
+                    }
 
                 } else {
-                    // unknown command
                     printLine();
                     System.out.println(" Karl didn’t understand that command 😅");
                     printLine();
@@ -161,7 +169,6 @@ public class Karl {
         return tasks.get(index);
     }
 
-    // helper method for pretty printing
     private static void printLine() {
         System.out.println("____________________________________________________________");
     }

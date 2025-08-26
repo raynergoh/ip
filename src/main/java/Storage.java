@@ -47,11 +47,23 @@ public class Storage {
                 if (t instanceof Todo) {
                     line = String.format("T | %d | %s", t.isDone ? 1 : 0, t.description);
                 } else if (t instanceof Deadline) {
-                    line = String.format("D | %d | %s | %s", t.isDone ? 1 : 0, t.description, ((Deadline)t).by);
-                } else if (t instanceof Event) {
-                    Event e = (Event) t;
-                    line = String.format("E | %d | %s | %s | %s", t.isDone ? 1 : 0, t.description, e.from, e.to);
+                    line = String.format("D | %d | %s | %s",
+                            t.isDone ? 1 : 0,
+                            t.description,
+                            ((Deadline)t).by.toString()
+                    );
                 }
+                else if (t instanceof Event) {
+                    Event e = (Event) t;
+                    // save using ISO_LOCAL_DATE format
+                    line = String.format("E | %d | %s | %s | %s",
+                            t.isDone ? 1 : 0,
+                            t.description,
+                            e.from.toString(),  // .toString() prints ISO_LOCAL_DATE = yyyy-MM-dd
+                            e.to.toString()
+                    );
+                }
+
                 writer.write(line);
                 writer.newLine();
             }
