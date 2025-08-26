@@ -5,7 +5,9 @@ public class Karl {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
+
+        // Load tasks from disk at startup
+        ArrayList<Task> tasks = Storage.loadTasks();
 
         // Intro
         printLine();
@@ -41,9 +43,10 @@ public class Karl {
                     int index = parseIndex(input, "mark");
                     Task task = getTask(tasks, index);
                     task.markAsDone();
+                    Storage.saveTasks(tasks);
                     printLine();
                     System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println("   " + task);
+                    System.out.println(" " + task);
                     printLine();
                     System.out.println();
 
@@ -51,9 +54,10 @@ public class Karl {
                     int index = parseIndex(input, "unmark");
                     Task task = getTask(tasks, index);
                     task.markAsNotDone();
+                    Storage.saveTasks(tasks);
                     printLine();
                     System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println("   " + task);
+                    System.out.println(" " + task);
                     printLine();
                     System.out.println();
 
@@ -61,13 +65,14 @@ public class Karl {
                     int index = parseIndex(input, "delete");
                     Task removedTask = getTask(tasks, index);
                     tasks.remove(index);
-
+                    Storage.saveTasks(tasks);
                     printLine();
                     System.out.println(" Noted. I've removed this task:");
-                    System.out.println("   " + removedTask);
+                    System.out.println(" " + removedTask);
                     System.out.println(" Now there are " + tasks.size() + (tasks.size() == 1 ? " task" : " tasks") + " in the list.");
                     printLine();
                     System.out.println();
+
                 } else if (input.startsWith("todo")) {
                     String desc = input.length() <= 4 ? "" : input.substring(4).trim();
                     if (desc.isEmpty()) {
@@ -75,6 +80,7 @@ public class Karl {
                     }
                     Task newTask = new Todo(desc);
                     tasks.add(newTask);
+                    Storage.saveTasks(tasks);
                     printAddedTask(newTask, tasks.size());
 
                 } else if (input.startsWith("deadline")) {
@@ -88,6 +94,7 @@ public class Karl {
                     }
                     Task newTask = new Deadline(desc.trim(), parts[1].trim());
                     tasks.add(newTask);
+                    Storage.saveTasks(tasks);
                     printAddedTask(newTask, tasks.size());
 
                 } else if (input.startsWith("event")) {
@@ -105,6 +112,7 @@ public class Karl {
                     }
                     Task newTask = new Event(desc.trim(), timeParts[0].trim(), timeParts[1].trim());
                     tasks.add(newTask);
+                    Storage.saveTasks(tasks);
                     printAddedTask(newTask, tasks.size());
 
                 } else {
@@ -161,7 +169,7 @@ public class Karl {
     private static void printAddedTask(Task task, int size) {
         printLine();
         System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + task);
+        System.out.println(" " + task);
         System.out.println(" Now you have " + size + " tasks in the list.");
         printLine();
         System.out.println();
