@@ -1,0 +1,22 @@
+public class AddTodoCommand implements Command {
+    private final String description;
+
+    public AddTodoCommand(String input) throws KarlException {
+        this.description = input.substring(4).trim();
+        if (this.description.isEmpty())
+            throw new KarlException("The description of a todo cannot be empty.");
+    }
+
+    @Override
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
+        Task todo = new Todo(description);
+        tasks.add(todo);
+        storage.saveTasks(tasks.getTasks());
+        ui.showAddedTask(todo, tasks.size());
+    }
+
+    @Override
+    public boolean isExit() {
+        return false;
+    }
+}
