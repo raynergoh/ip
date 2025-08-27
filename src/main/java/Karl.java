@@ -1,184 +1,49 @@
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.time.format.DateTimeParseException;
 
 public class Karl {
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+    private boolean isExit;
 
-    public static void main(String[] args) {
+    public Karl(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(storage.loadTasks());
+        } catch (KarlException e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
+        }
+        isExit = false;
+    }
+
+    public void run() {
+        ui.showWelcome();
+
         Scanner sc = new Scanner(System.in);
-
-        // Load tasks from disk at startup
-        ArrayList<Task> tasks = Storage.loadTasks();
-
-        // Intro
-        printLine();
-        System.out.println(" Hello! I'm Karl 🤖");
-        System.out.println(" What can I do for you?");
-        printLine();
-        System.out.println();
-
-        while (true) {
-            String input = sc.nextLine().trim();
-
+        while (!isExit) {
             try {
-                if (input.equalsIgnoreCase("bye")) {
-                    printLine();
-                    System.out.println(" Bye. Karl hopes to see you again soon!");
-                    printLine();
-                    break;
+                String input = ui.readCommand(sc);
+//                ui.printLine();
 
-                } else if (input.equalsIgnoreCase("list")) {
-                    printLine();
-                    if (tasks.isEmpty()) {
-                        System.out.println(" (No tasks yet!)");
-                    } else {
-                        System.out.println(" Here are the tasks in your list:");
-                        for (int i = 0; i < tasks.size(); i++) {
-                            System.out.println(" " + (i + 1) + ". " + tasks.get(i));
-                        }
-                    }
-                    printLine();
-                    System.out.println();
+                // Parse input and return Command
+                Command command = Parser.parse(input);
 
-                } else if (input.startsWith("mark ")) {
-                    int index = parseIndex(input, "mark");
-                    Task task = getTask(tasks, index);
-                    task.markAsDone();
-                    Storage.saveTasks(tasks);
-                    printLine();
-                    System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println(" " + task);
-                    printLine();
-                    System.out.println();
+                // Execute the command
+                command.execute(tasks, ui, storage);
 
-                } else if (input.startsWith("unmark ")) {
-                    int index = parseIndex(input, "unmark");
-                    Task task = getTask(tasks, index);
-                    task.markAsNotDone();
-                    Storage.saveTasks(tasks);
-                    printLine();
-                    System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println(" " + task);
-                    printLine();
-                    System.out.println();
-
-                } else if (input.startsWith("delete ")) {
-                    int index = parseIndex(input, "delete");
-                    Task removedTask = getTask(tasks, index);
-                    tasks.remove(index);
-                    Storage.saveTasks(tasks);
-                    printLine();
-                    System.out.println(" Noted. I've removed this task:");
-                    System.out.println(" " + removedTask);
-                    System.out.println(" Now there are " + tasks.size() + (tasks.size() == 1 ? " task" : " tasks") + " in the list.");
-                    printLine();
-                    System.out.println();
-
-                } else if (input.startsWith("todo")) {
-                    String desc = input.length() <= 4 ? "" : input.substring(4).trim();
-                    if (desc.isEmpty()) {
-                        throw new KarlException("I don't think the Todo description can be empty...");
-                    }
-                    Task newTask = new Todo(desc);
-                    tasks.add(newTask);
-                    Storage.saveTasks(tasks);
-                    printAddedTask(newTask, tasks.size());
-
-                } else if (input.startsWith("deadline")) {
-                    String[] parts = input.substring(8).split(" /by ", 2);
-                    String desc = parts[0];
-                    if (desc.trim().isEmpty()) {
-                        throw new KarlException("I don't think the Deadline description can be empty...");
-                    }
-                    if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                        throw new KarlException("Deadline must have a '/by' time specified.");
-                    }
-                    try {
-                        Task newTask = new Deadline(desc.trim(), parts[1].trim()); // Deadline constructor parses LocalDate
-                        tasks.add(newTask);
-                        Storage.saveTasks(tasks);
-                        printAddedTask(newTask, tasks.size());
-                    } catch (DateTimeParseException e) {
-                        throw new KarlException("Please enter deadline date in yyyy-MM-dd format.");
-                    }
-
-                } else if (input.startsWith("event")) {
-                    String[] parts = input.substring(5).split(" /from ", 2);
-                    String desc = parts[0];
-                    if (desc.trim().isEmpty()) {
-                        throw new KarlException("I don't think the Event description can be empty...");
-                    }
-                    if (parts.length < 2) {
-                        throw new KarlException("Event must have a '/from' time specified.");
-                    }
-                    String[] timeParts = parts[1].split(" /to ", 2);
-                    if (timeParts.length < 2) {
-                        throw new KarlException("Event must have a '/to' time specified.");
-                    }
-                    try {
-                        Task newTask = new Event(desc.trim(), timeParts[0].trim(), timeParts[1].trim()); // Event constructor parses LocalDate
-                        tasks.add(newTask);
-                        Storage.saveTasks(tasks);
-                        printAddedTask(newTask, tasks.size());
-                    } catch (DateTimeParseException e) {
-                        throw new KarlException("Please enter event dates in yyyy-MM-dd format.");
-                    }
-
-                } else {
-                    printLine();
-                    System.out.println(" Karl didn’t understand that command 😅");
-                    printLine();
-                    System.out.println();
-                }
+                isExit = command.isExit();
             } catch (KarlException e) {
-                printLine();
-                System.out.println(" " + e.getMessage());
-                printLine();
-                System.out.println();
-            } catch (Exception e) {
-                printLine();
-                System.out.println(" Something went wrong: " + e.getMessage());
-                printLine();
-                System.out.println();
+                ui.showError(e.getMessage());
+            } finally {
+                ui.printLine();
             }
         }
-
         sc.close();
     }
 
-    private static int parseIndex(String input, String command) throws KarlException {
-        String[] tokens = input.split(" ");
-        if (tokens.length < 2) {
-            throw new KarlException("You must specify the task number to " + command + ".");
-        }
-        try {
-            int index = Integer.parseInt(tokens[1]) - 1;
-            if (index < 0) {
-                throw new KarlException("Task number must be a positive integer.");
-            }
-            return index;
-        } catch (NumberFormatException e) {
-            throw new KarlException("Invalid task number format.");
-        }
-    }
-
-    private static Task getTask(ArrayList<Task> tasks, int index) throws KarlException {
-        if (index >= tasks.size()) {
-            throw new KarlException("Task number out of range.");
-        }
-        return tasks.get(index);
-    }
-
-    private static void printLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    private static void printAddedTask(Task task, int size) {
-        printLine();
-        System.out.println(" Got it. I've added this task:");
-        System.out.println(" " + task);
-        System.out.println(" Now you have " + size + " tasks in the list.");
-        printLine();
-        System.out.println();
+    public static void main(String[] args) {
+        new Karl("data" + java.io.File.separator + "karl.txt").run();
     }
 }
