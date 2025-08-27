@@ -1,3 +1,7 @@
+package karl.task;
+
+import karl.exception.KarlException;
+
 import java.util.ArrayList;
 
 public class TaskList {

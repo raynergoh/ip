@@ -1,3 +1,12 @@
+package karl;
+
+import karl.command.Command;
+import karl.exception.KarlException;
+import karl.parser.Parser;
+import karl.storage.Storage;
+import karl.task.TaskList;
+import karl.ui.Ui;
+
 import java.util.Scanner;
 
 public class Karl {

@@ -1,3 +1,10 @@
+package karl.command;
+
+import karl.exception.KarlException;
+import karl.storage.Storage;
+import karl.task.TaskList;
+import karl.ui.Ui;
+
 public interface Command {
     /**
      * Executes the command.

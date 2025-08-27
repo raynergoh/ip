@@ -1,3 +1,11 @@
+package karl.storage;
+
+import karl.exception.KarlException;
+import karl.task.Deadline;
+import karl.task.Event;
+import karl.task.Task;
+import karl.task.Todo;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -76,13 +84,13 @@ public class Storage {
             for (Task t : tasks) {
                 String line = "";
                 if (t instanceof Todo) {
-                    line = String.format("T | %d | %s", t.isDone ? 1 : 0, t.description);
+                    line = String.format("T | %d | %s", t.isDone() ? 1 : 0, t.getDescription());
                 } else if (t instanceof Deadline) {
                     Deadline d = (Deadline) t;
-                    line = String.format("D | %d | %s | %s", t.isDone ? 1 : 0, t.description, d.by.toString());
+                    line = String.format("D | %d | %s | %s", t.isDone() ? 1 : 0, t.getDescription(), d.getBy().toString());
                 } else if (t instanceof Event) {
                     Event e = (Event) t;
-                    line = String.format("E | %d | %s | %s | %s", t.isDone ? 1 : 0, t.description, e.from.toString(), e.to.toString());
+                    line = String.format("E | %d | %s | %s | %s", t.isDone() ? 1 : 0, t.getDescription(), e.getFrom().toString(), e.getTo().toString());
                 }
                 writer.write(line);
                 writer.newLine();

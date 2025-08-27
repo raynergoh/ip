@@ -1,3 +1,11 @@
+package karl.command;
+
+import karl.exception.KarlException;
+import karl.storage.Storage;
+import karl.task.Task;
+import karl.task.TaskList;
+import karl.ui.Ui;
+
 public class DeleteCommand implements Command {
     private final int index;
 

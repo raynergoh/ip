@@ -1,3 +1,10 @@
+package karl.command;
+
+import karl.storage.Storage;
+import karl.task.TaskList;
+import karl.ui.Ui;
+import karl.exception.KarlException;
+
 public class MarkCommand implements Command {
     private final int index;
 

@@ -1,3 +1,12 @@
+package karl.command;
+
+import karl.exception.KarlException;
+import karl.storage.Storage;
+import karl.task.Deadline;
+import karl.task.Task;
+import karl.task.TaskList;
+import karl.ui.Ui;
+
 public class AddDeadlineCommand implements Command {
     private final String description;
     private final String by;

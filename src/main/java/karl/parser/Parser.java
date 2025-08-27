@@ -1,3 +1,10 @@
+package karl.parser;
+
+import karl.command.AddDeadlineCommand;
+import karl.command.AddEventCommand;
+import karl.command.*;
+import karl.exception.KarlException;
+
 public class Parser {
     public static Command parse(String input) throws KarlException {
         // Parse input string and return a Command object accordingly

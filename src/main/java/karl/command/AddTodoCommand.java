@@ -1,3 +1,12 @@
+package karl.command;
+
+import karl.exception.KarlException;
+import karl.storage.Storage;
+import karl.task.Task;
+import karl.task.TaskList;
+import karl.task.Todo;
+import karl.ui.Ui;
+
 public class AddTodoCommand implements Command {
     private final String description;
 

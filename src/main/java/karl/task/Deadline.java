@@ -1,8 +1,10 @@
+package karl.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
-    protected LocalDate by;  // store deadline as LocalDate
+    private LocalDate by;  // store deadline as LocalDate
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
@@ -11,6 +13,10 @@ public class Deadline extends Task {
         super(description);
         // parse input date string to LocalDate
         this.by = LocalDate.parse(by.trim(), INPUT_FORMAT);
+    }
+
+    public LocalDate getBy() {
+        return by;
     }
 
     @Override
