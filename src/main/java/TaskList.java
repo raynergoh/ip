@@ -15,15 +15,25 @@ public class TaskList {
         tasks.add(task);
     }
 
-    public Task delete(int index) {
+    public Task delete(int index) throws KarlException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new KarlException("Invalid task index");
+        }
         return tasks.remove(index);
     }
 
-    public void mark(int index) {
+
+    public void mark(int index) throws KarlException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new KarlException("Invalid task index");
+        }
         tasks.get(index).markAsDone();
     }
 
-    public void unmark(int index) {
+    public void unmark(int index) throws KarlException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new KarlException("Invalid task index");
+        }
         tasks.get(index).markAsNotDone();
     }
 

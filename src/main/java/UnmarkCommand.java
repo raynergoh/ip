@@ -7,6 +7,9 @@ public class UnmarkCommand implements Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new KarlException("The task number " + (index + 1) + " is out of range.");
+        }
         tasks.unmark(index);
         storage.saveTasks(tasks.getTasks());
         ui.showUnmarkedTask(tasks.get(index));

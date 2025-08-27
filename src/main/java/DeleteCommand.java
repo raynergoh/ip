@@ -7,10 +7,14 @@ public class DeleteCommand implements Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new KarlException("The task number " + (index + 1) + " is out of range.");
+        }
         Task removed = tasks.delete(index);
         storage.saveTasks(tasks.getTasks());
         ui.showRemovedTask(removed, tasks.size());
     }
+
 
     @Override
     public boolean isExit() {
