@@ -9,12 +9,20 @@ import karl.ui.Ui;
 
 import java.util.Scanner;
 
+/**
+ * Main chatbot class. Initializes all components and runs the main loop.
+ */
 public class Karl {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
     private boolean isExit;
 
+    /**
+     * Creates a new Karl chatbot with the data file to load/store tasks.
+     *
+     * @param filePath The path to the data file.
+     */
     public Karl(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -27,6 +35,9 @@ public class Karl {
         isExit = false;
     }
 
+    /**
+     * Runs the chatbot, starting the input-read-process loop.
+     */
     public void run() {
         ui.showWelcome();
 
@@ -52,6 +63,11 @@ public class Karl {
         sc.close();
     }
 
+    /**
+     * Application entry point.
+     *
+     * @param args Command-line arguments (ignored).
+     */
     public static void main(String[] args) {
         new Karl("data" + java.io.File.separator + "karl.txt").run();
     }

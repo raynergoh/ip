@@ -9,14 +9,28 @@ import karl.task.Todo;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Handles loading and saving of task data to and from disk.
+ * Responsible for all persistent storage functionality of the chatbot.
+ */
 public class Storage {
     private String filePath;
     private static final String FOLDER = "data";
 
+    /**
+     * Creates a Storage instance tied to a specific file.
+     * @param filePath the file to store/load task data
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the file into a list.
+     * Skips malformed lines and returns an empty list if file absent.
+     * @return list of tasks loaded from file
+     * @throws KarlException if file read errors occur
+     */
     public ArrayList<Task> loadTasks() throws KarlException {
         ArrayList<Task> tasks = new ArrayList<>();
         File dataFile = new File(filePath);
@@ -76,6 +90,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves an entire list of tasks to the storage file.
+     * Creates required directories if they don't exist.
+     * @param tasks the list of tasks to save
+     * @throws KarlException if file write errors occur
+     */
     public void saveTasks(ArrayList<Task> tasks) throws KarlException {
         File dataDir = new File(FOLDER);
         if (!dataDir.exists()) dataDir.mkdirs();
