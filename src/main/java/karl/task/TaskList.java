@@ -3,6 +3,8 @@ package karl.task;
 import karl.exception.KarlException;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskList {
     private ArrayList<Task> tasks;
@@ -26,6 +28,12 @@ public class TaskList {
         return tasks.remove(index);
     }
 
+    public List<Task> find(String keyword) {
+        String lowerKeyword = keyword.toLowerCase();
+        return tasks.stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(lowerKeyword))
+                .collect(Collectors.toList());
+    }
 
     public void mark(int index) throws KarlException {
         if (index < 0 || index >= tasks.size()) {
