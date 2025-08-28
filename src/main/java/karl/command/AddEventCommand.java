@@ -7,11 +7,20 @@ import karl.task.Task;
 import karl.task.TaskList;
 import karl.ui.Ui;
 
+/**
+ * Adds an event task to the task list.
+ */
 public class AddEventCommand implements Command {
     private final String description;
     private final String from;
     private final String to;
 
+    /**
+     * Constructs an AddEventCommand from user input.
+     *
+     * @param input the raw input string starting with "event"
+     * @throws KarlException if the input format is invalid
+     */
     public AddEventCommand(String input) throws KarlException {
         String[] parts = input.substring(5).split(" /from ", 2);
         if (parts.length < 2 || parts[0].trim().isEmpty())
@@ -25,6 +34,14 @@ public class AddEventCommand implements Command {
         this.to = timeParts[1].trim();
     }
 
+    /**
+     * Executes the addition of an event task, saves the task list and displays confirmation.
+     *
+     * @param tasks the TaskList to add to
+     * @param ui the Ui to interact with the user
+     * @param storage the Storage to persist data
+     * @throws KarlException if date parsing or storage fails
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
         try {
@@ -37,6 +54,11 @@ public class AddEventCommand implements Command {
         }
     }
 
+    /**
+     * Indicates this command does not terminate the program.
+     *
+     * @return false as this command does not exit
+     */
     @Override
     public boolean isExit() {
         return false;
