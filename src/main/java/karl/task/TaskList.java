@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * Manages the in-memory list of tasks.
- * Provides operations to add, delete, mark, unmark and access tasks.
+ * Provides operations to add, delete, find, mark, unmark and access tasks.
  */
 public class TaskList {
     private ArrayList<Task> tasks;
@@ -48,6 +48,12 @@ public class TaskList {
         return tasks.remove(index);
     }
 
+    /**
+     * Finds all tasks whose descriptions contain the given keyword (case-insensitive).
+     *
+     * @param keyword the keyword to search for
+     * @return a list of matching tasks; empty list if none found
+     */
     public List<Task> find(String keyword) {
         String lowerKeyword = keyword.toLowerCase();
         return tasks.stream()

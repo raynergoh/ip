@@ -10,11 +10,18 @@ import java.util.List;
 
 /**
  * Command to find tasks containing a keyword in their description.
+ * Searches case-insensitively and displays matching tasks.
  */
 public class FindCommand implements Command {
 
     private final String keyword;
 
+    /**
+     * Constructs a FindCommand with the keyword extracted from user input.
+     *
+     * @param input the raw user input string starting with "find"
+     * @throws KarlException if no keyword is provided
+     */
     public FindCommand(String input) throws KarlException {
         String userInput = input.trim();
         if (userInput.length() <= 4) { // "find" + space + keyword
@@ -26,6 +33,14 @@ public class FindCommand implements Command {
         }
     }
 
+    /**
+     * Executes the find command by searching tasks for the keyword
+     * and displaying matched tasks or a no-match message.
+     *
+     * @param tasks the TaskList to search
+     * @param ui the Ui object for user interaction
+     * @param storage the Storage object (not used here)
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         List<Task> matchedTasks = tasks.find(keyword);
@@ -42,6 +57,11 @@ public class FindCommand implements Command {
         System.out.println();
     }
 
+    /**
+     * Indicates this command does not terminate the program.
+     *
+     * @return false as this command does not exit
+     */
     @Override
     public boolean isExit() {
         return false;
