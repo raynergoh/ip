@@ -44,7 +44,6 @@ public class FindCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         List<Task> matchedTasks = tasks.find(keyword);
-        ui.printLine();
         if (matchedTasks.isEmpty()) {
             System.out.println("No matching tasks found for keyword: " + keyword);
         } else {
@@ -53,7 +52,6 @@ public class FindCommand implements Command {
                 System.out.println((i + 1) + "." + matchedTasks.get(i));
             }
         }
-        ui.printLine();
         System.out.println();
     }
 

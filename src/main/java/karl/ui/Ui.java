@@ -2,139 +2,88 @@ package karl.ui;
 
 import karl.task.Task;
 import karl.task.TaskList;
-
 import java.util.Scanner;
 
 /**
- * Handles all user interactions via the console.
- * Responsible for reading user input and displaying messages.
+ * Handles all user interactions for Karl.
+ * Collects all messages in a buffer for GUI retrieval.
  */
 public class Ui {
+    private StringBuilder responseBuffer = new StringBuilder();
 
-    /**
-     * Displays the welcome message when the chatbot starts.
-     */
+    // --- Methods for GUI support ---
+
+    /** Clears the buffer before each response. */
+    private void clearBuffer() {
+        responseBuffer.setLength(0);
+    }
+
+    /** Returns the latest response as a string, then clears buffer. */
+    public String getLastMessage() {
+        String res = responseBuffer.toString();
+        clearBuffer();
+        return res;
+    }
+
     public void showWelcome() {
-        printLine();
-        System.out.println(" Hello! I'm Karl 🤖");
-        System.out.println(" What can I do for you?");
-        printLine();
+        clearBuffer();
+        responseBuffer.append("Hello! I'm Karl 🤖\nWhat can I do for you?\n");
     }
 
-    /**
-     * Displays a goodbye message when the chatbot exits.
-     */
     public void showGoodbye() {
-        printLine();
-        System.out.println(" Bye. Karl hopes to see you again!");
-//        printLine();
+        clearBuffer();
+        responseBuffer.append("Bye. Karl hopes to see you again!\n");
     }
 
-    /**
-     * Prints a horizontal divider line.
-     */
-    public void printLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * Displays an error message.
-     *
-     * @param message The error message to show.
-     */
     public void showError(String message) {
-        System.out.println(" " + message);
+        clearBuffer();
+        responseBuffer.append("Error: ").append(message).append("\n");
     }
 
-    /**
-     * Displays a message indicating failure to load saved data.
-     */
     public void showLoadingError() {
-        System.out.println(" Error loading tasks. Starting with an empty list.");
+        clearBuffer();
+        responseBuffer.append("Error loading tasks. Starting with an empty list.\n");
     }
 
-    /**
-     * Reads a full line of user input from the given Scanner.
-     *
-     * @param sc Scanner connected to user input stream.
-     * @return the trimmed input string.
-     */
     public String readCommand(Scanner sc) {
         return sc.nextLine().trim();
     }
 
-    /**
-     * Displays the confirmation message for task addition.
-     *
-     * @param task The task that was added.
-     * @param taskCount The current number of tasks in the list.
-     */
     public void showAddedTask(Task task, int taskCount) {
-        printLine();
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + taskCount + " " + (taskCount == 1 ? "task" : "tasks") + " in the list.");
-//        printLine();
-        System.out.println();
+        clearBuffer();
+        responseBuffer.append("Got it. I've added this task:\n  ").append(task).append('\n');
+        responseBuffer.append("Now you have ").append(taskCount)
+                .append(" ").append((taskCount == 1) ? "task" : "tasks").append(" in the list.\n");
     }
 
-    /**
-     * Displays confirmation of a task removal.
-     *
-     * @param task The task that was removed.
-     * @param taskCount The current number of tasks in the list.
-     */
     public void showRemovedTask(Task task, int taskCount) {
-        printLine();
-        System.out.println(" Noted. I've removed this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + taskCount + " " + (taskCount == 1 ? "task" : "tasks") + " in the list.");
-//        printLine();
-        System.out.println();
+        clearBuffer();
+        responseBuffer.append("Noted. I've removed this task:\n  ").append(task).append('\n');
+        responseBuffer.append("Now you have ").append(taskCount)
+                .append(" ").append((taskCount == 1) ? "task" : "tasks").append(" in the list.\n");
     }
 
-    /**
-     * Displays confirmation that a task was marked done.
-     *
-     * @param task The task that was marked done.
-     */
     public void showMarkedTask(Task task) {
-        printLine();
-        System.out.println(" Nice! I've marked this task as done:");
-        System.out.println("   " + task);
-        printLine();
-        System.out.println();
+        clearBuffer();
+        responseBuffer.append("Nice! I've marked this task as done:\n  ").append(task).append('\n');
     }
 
-    /**
-     * Displays confirmation that a task was marked undone.
-     *
-     * @param task The task that was marked undone.
-     */
     public void showUnmarkedTask(Task task) {
-        printLine();
-        System.out.println(" OK, I've marked this task as not done yet:");
-        System.out.println("   " + task);
-//        printLine();
-        System.out.println();
+        clearBuffer();
+        responseBuffer.append("OK, I've marked this task as not done yet:\n  ").append(task).append('\n');
     }
 
-    /**
-     * Displays the whole list of tasks to the user.
-     *
-     * @param tasks The task list to display.
-     */
     public void showTaskList(TaskList tasks) {
-        printLine();
+        clearBuffer();
         if (tasks.size() == 0) {
-            System.out.println(" (No tasks yet!)");
+            responseBuffer.append("(No tasks yet!)\n");
         } else {
-            System.out.println(" Here are the tasks in your list:");
+            responseBuffer.append("Here are the tasks in your list:\n");
             for (int i = 0; i < tasks.size(); i++) {
-                System.out.println(" " + (i + 1) + ". " + tasks.get(i));
+                responseBuffer.append((i + 1)).append(". ").append(tasks.get(i)).append('\n');
             }
         }
-//        printLine();
-        System.out.println();
     }
+
+    // Add similar buffered output for all other reply types as needed
 }

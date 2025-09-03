@@ -7,68 +7,49 @@ import karl.storage.Storage;
 import karl.task.TaskList;
 import karl.ui.Ui;
 
-import java.util.Scanner;
-
 /**
- * Main chatbot class. Initializes all components and runs the main loop.
+ * Main chatbot class for backend logic, suitable for GUI use.
  */
 public class Karl {
+
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
     private boolean isExit;
+    private String commandType;
 
-    /**
-     * Creates a new Karl chatbot with the data file to load/store tasks.
-     *
-     * @param filePath The path to the data file.
-     */
     public Karl(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.loadTasks());
         } catch (KarlException e) {
-            ui.showLoadingError();
             tasks = new TaskList();
         }
         isExit = false;
     }
 
     /**
-     * Runs the chatbot, starting the input-read-process loop.
+     * Gets chatbot's response to a string input, for GUI use.
+     * @param input user input string
+     * @return chatbot's reply as text
      */
-    public void run() {
-        ui.showWelcome();
-
-        Scanner sc = new Scanner(System.in);
-        while (!isExit) {
-            try {
-                String input = ui.readCommand(sc);
-//                ui.printLine();
-
-                // Parse input and return Command
-                Command command = Parser.parse(input);
-
-                // Execute the command
-                command.execute(tasks, ui, storage);
-
-                isExit = command.isExit();
-            } catch (KarlException e) {
-                ui.showError(e.getMessage());
-            } finally {
-                ui.printLine();
-            }
+    public String getResponse(String input) {
+        try {
+            Command command = Parser.parse(input);
+            command.execute(tasks, ui, storage); // may update state
+            commandType = command.getClass().getSimpleName();
+            return ui.getLastMessage(); // You need to support text response with Ui
+        } catch (KarlException e) {
+            return "Oh no! " + e.getMessage();
         }
-        sc.close();
     }
 
     /**
-     * Application entry point.
-     *
-     * @param args Command-line arguments (ignored).
+     * Returns the type of the last command executed.
+     * @return command type name
      */
-    public static void main(String[] args) {
-        new Karl("data" + java.io.File.separator + "karl.txt").run();
+    public String getCommandType() {
+        return commandType;
     }
 }
