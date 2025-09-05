@@ -1,5 +1,6 @@
 T | 0 | homework
 E | 1 | desc | 2025-08-06 | 2025-08-10
 T | 0 | lecture review
-E | 0 | test | 2025-03-23 | 2025-04-21
-T | 0 | lecture video
+E | 1 | test | 2025-03-23 | 2025-04-21
+T | 1 | lecture video
+T | 0 | test

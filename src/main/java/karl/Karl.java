@@ -1,5 +1,6 @@
 package karl;
 
+import javafx.application.Platform;
 import karl.command.Command;
 import karl.exception.KarlException;
 import karl.parser.Parser;
@@ -39,6 +40,9 @@ public class Karl {
             Command command = Parser.parse(input);
             command.execute(tasks, ui, storage); // may update state
             commandType = command.getClass().getSimpleName();
+            if (command.isExit()) {
+                Platform.exit();
+            }
             return ui.getLastMessage(); // You need to support text response with Ui
         } catch (KarlException e) {
             return "Oh no! " + e.getMessage();
