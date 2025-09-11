@@ -12,8 +12,8 @@ import karl.ui.Ui;
  */
 public class AddEventCommand implements Command {
     private final String description;
-    private final String from;
-    private final String to;
+    private final String start;
+    private final String end;
 
     /**
      * Constructs an AddEventCommand from user input.
@@ -31,8 +31,8 @@ public class AddEventCommand implements Command {
         String[] timeParts = parts[1].split(" /to ", 2);
         if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty())
             throw new KarlException("Event must specify /from and /to dates.");
-        this.from = timeParts[0].trim();
-        this.to = timeParts[1].trim();
+        this.start = timeParts[0].trim();
+        this.end = timeParts[1].trim();
     }
 
     /**
@@ -49,7 +49,7 @@ public class AddEventCommand implements Command {
         assert ui != null;
         assert storage != null;
         try {
-            Task event = new Event(description, from, to);
+            Task event = new Event(description, start, end);
             tasks.add(event);
             storage.saveTasks(tasks.getTasks());
             ui.showAddedTask(event, tasks.size());
