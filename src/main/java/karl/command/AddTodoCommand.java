@@ -20,6 +20,7 @@ public class AddTodoCommand implements Command {
      * @throws KarlException if the description is missing
      */
     public AddTodoCommand(String input) throws KarlException {
+        assert input != null : "Input should not be null";
         this.description = input.substring(4).trim();
         if (this.description.isEmpty())
             throw new KarlException("The description of a todo cannot be empty.");
@@ -35,6 +36,9 @@ public class AddTodoCommand implements Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
+        assert tasks != null;
+        assert ui != null;
+        assert storage != null;
         Task todo = new Todo(description);
         tasks.add(todo);
         storage.saveTasks(tasks.getTasks());

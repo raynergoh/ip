@@ -22,6 +22,7 @@ public class AddEventCommand implements Command {
      * @throws KarlException if the input format is invalid
      */
     public AddEventCommand(String input) throws KarlException {
+        assert input != null : "Input should not be null";
         String[] parts = input.substring(5).split(" /from ", 2);
         if (parts.length < 2 || parts[0].trim().isEmpty())
             throw new KarlException("Event format: event DESCRIPTION /from DATE /to DATE (yyyy-MM-dd)");
@@ -44,6 +45,9 @@ public class AddEventCommand implements Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
+        assert tasks != null;
+        assert ui != null;
+        assert storage != null;
         try {
             Task event = new Event(description, from, to);
             tasks.add(event);
