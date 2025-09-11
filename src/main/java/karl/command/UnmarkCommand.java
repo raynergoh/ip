@@ -18,6 +18,7 @@ public class UnmarkCommand implements Command {
      * @throws KarlException on invalid format or missing index
      */
     public UnmarkCommand(String input) throws KarlException {
+        assert input != null;
         this.index = parseIndex(input, "unmark");
     }
 
@@ -32,6 +33,9 @@ public class UnmarkCommand implements Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
+        assert tasks != null;
+        assert ui != null;
+        assert storage != null;
         if (index < 0 || index >= tasks.size()) {
             throw new KarlException("The task number " + (index + 1) + " is out of range.");
         }

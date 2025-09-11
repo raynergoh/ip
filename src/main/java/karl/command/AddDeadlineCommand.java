@@ -21,6 +21,7 @@ public class AddDeadlineCommand implements Command {
      * @throws KarlException if the input format is invalid
      */
     public AddDeadlineCommand(String input) throws KarlException {
+        assert input != null : "Input string should not be null";
         String[] parts = input.substring(8).split(" /by ", 2);
         if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty())
             throw new KarlException("Deadline format: deadline DESCRIPTION /by DATE (yyyy-MM-dd)");
@@ -38,6 +39,9 @@ public class AddDeadlineCommand implements Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
+        assert tasks != null : "tasks should never be null";
+        assert ui != null : "ui should never be null";
+        assert storage != null : "storage should never be null";
         try {
             Task deadline = new Deadline(description, by);
             tasks.add(deadline);

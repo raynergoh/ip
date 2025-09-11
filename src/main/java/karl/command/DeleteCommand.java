@@ -19,6 +19,7 @@ public class DeleteCommand implements Command {
      * @throws KarlException if index is missing or invalid
      */
     public DeleteCommand(String input) throws KarlException {
+        assert input != null;
         this.index = parseIndex(input, "delete");
     }
 
@@ -33,6 +34,9 @@ public class DeleteCommand implements Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
+        assert tasks != null;
+        assert ui != null;
+        assert storage != null;
         if (index < 0 || index >= tasks.size()) {
             throw new KarlException("The task number " + (index + 1) + " is out of range.");
         }
