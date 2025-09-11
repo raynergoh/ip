@@ -6,7 +6,12 @@ import karl.task.Event;
 import karl.task.Task;
 import karl.task.Todo;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +20,7 @@ import java.util.ArrayList;
  */
 public class Storage {
     private String filePath;
-    private static final String FOLDER = "data";
+    private static final String FOLDER_PATH = "data";
 
     /**
      * Creates a Storage instance tied to a specific file.
@@ -36,7 +41,7 @@ public class Storage {
         File dataFile = new File(filePath);
 
         if (!dataFile.exists()) {
-            File folder = new File(FOLDER);
+            File folder = new File(FOLDER_PATH);
             if (!folder.exists()) {
                 folder.mkdirs();
             }
@@ -97,7 +102,7 @@ public class Storage {
      * @throws KarlException if file write errors occur
      */
     public void saveTasks(ArrayList<Task> tasks) throws KarlException {
-        File dataDir = new File(FOLDER);
+        File dataDir = new File(FOLDER_PATH);
         if (!dataDir.exists()) dataDir.mkdirs();
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {

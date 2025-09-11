@@ -12,7 +12,7 @@ import karl.ui.Ui;
  */
 public class AddDeadlineCommand implements Command {
     private final String description;
-    private final String by;
+    private final String dueDate;
 
     /**
      * Constructs an AddDeadlineCommand from user input.
@@ -25,7 +25,7 @@ public class AddDeadlineCommand implements Command {
         if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty())
             throw new KarlException("Deadline format: deadline DESCRIPTION /by DATE (yyyy-MM-dd)");
         this.description = parts[0].trim();
-        this.by = parts[1].trim();
+        this.dueDate = parts[1].trim();
     }
 
     /**
@@ -39,7 +39,7 @@ public class AddDeadlineCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws KarlException {
         try {
-            Task deadline = new Deadline(description, by);
+            Task deadline = new Deadline(description, dueDate);
             tasks.add(deadline);
             storage.saveTasks(tasks.getTasks());
             ui.showAddedTask(deadline, tasks.size());

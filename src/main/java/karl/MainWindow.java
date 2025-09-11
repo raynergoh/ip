@@ -32,10 +32,10 @@ public class MainWindow extends AnchorPane {
     }
 
     /** Injects the Karl instance */
-    public void setKarl(Karl d) {
-        karl = d;
+    public void setKarl(Karl k) {
+        karl = k;
         dialogContainer.getChildren().addAll(
-                DialogBox.getKarlDialog(d.getUi().showWelcome(), karlImage, "")
+                DialogBox.getKarlDialog(karl.getUi().showWelcome(), karlImage, "")
         );
     }
 
