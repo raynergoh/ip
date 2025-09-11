@@ -7,6 +7,7 @@ import karl.command.Command;
 import karl.command.DeleteCommand;
 import karl.command.ExitCommand;
 import karl.command.FindCommand;
+import karl.command.HelpCommand;
 import karl.command.ListCommand;
 import karl.command.MarkCommand;
 import karl.command.UnmarkCommand;
@@ -45,6 +46,8 @@ public class Parser {
             return new DeleteCommand(input);
         } else if (input.startsWith("find")) {
             return new FindCommand(input);
+        } else if (input.equalsIgnoreCase("help")) {
+            return new HelpCommand();
         } else {
             throw new KarlException("Karl didn’t understand that command 😅");
         }

@@ -45,15 +45,17 @@ public class FindCommand implements Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         List<Task> matchedTasks = tasks.find(keyword);
         if (matchedTasks.isEmpty()) {
-            System.out.println("No matching tasks found for keyword: " + keyword);
+            ui.showMessage("No matching tasks found for keyword: " + keyword);
         } else {
-            System.out.println("Here are the matching tasks in your list:");
+            StringBuilder sb = new StringBuilder();
+            sb.append("Here are the matching tasks in your list:\n");
             for (int i = 0; i < matchedTasks.size(); i++) {
-                System.out.println((i + 1) + "." + matchedTasks.get(i));
+                sb.append((i + 1)).append(".").append(matchedTasks.get(i)).append("\n");
             }
+            ui.showMessage(sb.toString());
         }
-        System.out.println();
     }
+
 
     /**
      * Indicates this command does not terminate the program.

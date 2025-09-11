@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Ui {
     private StringBuilder responseBuffer = new StringBuilder();
 
-    // --- Methods for GUI support ---
+    //  Methods for GUI support
 
     /** Clears the buffer before each response. */
     private void clearBuffer() {
@@ -72,6 +72,11 @@ public class Ui {
         responseBuffer.append("OK, I've marked this task as not done yet:\n  ").append(task).append('\n');
     }
 
+    public void showMessage(String message) {
+        clearBuffer();
+        responseBuffer.append(message).append("\n");
+    }
+
     public void showTaskList(TaskList tasks) {
         clearBuffer();
         if (tasks.size() == 0) {
@@ -83,6 +88,4 @@ public class Ui {
             }
         }
     }
-
-    // Add similar buffered output for all other reply types as needed
 }
