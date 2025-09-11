@@ -45,6 +45,7 @@ public class Karl {
             }
             return ui.getLastMessage(); // You need to support text response with Ui
         } catch (KarlException e) {
+            commandType = "";
             return "Oh no! " + e.getMessage();
         }
     }
