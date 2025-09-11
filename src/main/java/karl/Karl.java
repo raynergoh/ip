@@ -49,6 +49,10 @@ public class Karl {
         }
     }
 
+    public Ui getUi() {
+        return ui;
+    }
+
     /**
      * Returns the type of the last command executed.
      * @return command type name

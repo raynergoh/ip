@@ -25,9 +25,8 @@ public class Ui {
         return res;
     }
 
-    public void showWelcome() {
-        clearBuffer();
-        responseBuffer.append("Hello! I'm Karl 🤖\nWhat can I do for you?\n");
+    public String showWelcome() {
+        return "Hello! I'm Karl 🤖\nWhat can I do for you?\n";
     }
 
     public void showGoodbye() {
