@@ -13,13 +13,14 @@ Welcome to **Karl 🤖**, your friendly task management chatbot! This guide help
 
 ### Adding a Todo Task
 ![Add Todo](./todo.png "Add Todo")
-- **Format:**
+**Format:**
 ```
 todo TASK_DESCRIPTION
 ```
-- **Description:**
+**Description:**
+
 Adds a todo task with the given description to your task list. Todo tasks have no deadlines or event times.
-- **Example:**
+**Example:**
 ```
 todo read book
 ```
