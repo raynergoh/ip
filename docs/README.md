@@ -14,14 +14,14 @@ Welcome to **Karl 🤖**, your friendly task management chatbot! This guide help
 ### Adding a Todo Task
 ![Add Todo](./todo.png "Add Todo")
 
-**Format :**
+**Format**
 ```
 todo TASK_DESCRIPTION
 ```
-**Description :**
+**Description**
 
 Adds a todo task with the given description to your task list. Todo tasks have no deadlines or event times.
-**Example :**
+**Example**
 ```
 todo read book
 ```
@@ -29,13 +29,14 @@ todo read book
 
 ### Adding a Deadline Task
 ![Add Deadline](./deadline.png "Add Deadline")
-- **Format:**
+**Format**
 ```
 deadline TASK_DESCRIPTION /by YYYY-MM-DD
 ```
-- **Description:**
+**Description**
+
 Adds a deadline task with the given description and due date.
-- **Example:**
+**Example**
 ```
 deadline submit report /by 2025-09-20
 ```
