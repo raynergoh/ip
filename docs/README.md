@@ -145,6 +145,7 @@ help
 **Description**
 
 Karl will provide you with a help message.
+
 ---
 
 ### Exiting the App
@@ -153,7 +154,9 @@ Karl will provide you with a help message.
 bye
 ```
 **Description**
+
 Exits the Karl chatbot application.
+
 ---
 
 ## Getting Started
