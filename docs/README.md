@@ -13,6 +13,7 @@ Welcome to **Karl 🤖**, your friendly task management chatbot! This guide help
 
 ### Adding a Todo Task
 ![Add Todo](./todo.png "Add Todo")
+
 **Format:**
 ```
 todo TASK_DESCRIPTION
