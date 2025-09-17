@@ -1,30 +1,63 @@
-# Duke User Guide
+# Karl Chatbot User Guide
 
-// Update the title above to match the actual product name
+Welcome to **Karl 🤖**, your friendly task management chatbot! This guide helps you get started and make the most of Karl’s features.
 
-// Product screenshot goes here
+---
 
-// Product intro goes here
+## Features
 
-## Adding deadlines
+### Add Tasks
 
-// Describe the action and its outcome.
+- Add tasks of various types to your task list with simple commands.
+- Examples:
+  - `todo read book` — Add a todo task.
+  - `deadline submit report /by 2025-09-20` — Add a deadline task.
+  - `event team meeting /at 2025-09-18 10:00` — Add an event task.
 
-// Give examples of usage
+### List Tasks
 
-Example: `keyword (optional arguments)`
+- View all your current tasks neatly numbered.
+- Use the `list` command to display your task list.
 
-// A description of the expected outcome goes here
+### Mark Tasks Done / Undone
 
-```
-expected output
-```
+- Mark tasks as done to keep track of your progress.
+- Use `mark 3` to mark task 3 done.
+- Use `unmark 3` to mark task 3 undone.
 
-## Feature ABC
+### Delete Tasks
 
-// Feature details
+- Remove tasks you no longer need.
+- Use `delete 2` to delete task 2.
 
+### Search Tasks
 
-## Feature XYZ
+- Find tasks containing specific keywords.
+- Use `find book` to find tasks mentioning "book".
 
-// Feature details
+### Help and Exit
+
+- Use `help` to see a list of available commands.
+- Use `bye` to exit the chatbot politely.
+
+---
+
+## Getting Started
+
+1. Type your command and press Enter.
+2. Karl will confirm your action or show results.
+3. Manage your tasks efficiently and effortlessly!
+
+---
+
+## Tips
+
+- Always check the command format for deadlines and events (use `/by` and `/at`).
+- Use the `list` command often to review your tasks.
+- Mark tasks done as you complete them to stay organized.
+
+---
+
+Thank you for choosing **Karl 🤖**. Happy task managing!
+
+---
