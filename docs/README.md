@@ -25,8 +25,22 @@ Adds a todo task with the given description to your task list. Todo tasks have n
 ```
 todo read book
 ```
+---
 
+### Adding a Deadline Task
 
+- **Format:**
+```
+deadline TASK_DESCRIPTION /by YYYY-MM-DD
+```
+- **Description:**
+
+Adds a deadline task with the given description and due date.
+
+- **Example:**
+```
+deadline submit report /by 2025-09-20
+```
 ### List Tasks
 
 <p align="center">
