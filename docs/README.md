@@ -21,6 +21,10 @@ Welcome to **Karl 🤖**, your friendly task management chatbot! This guide help
 
 ### List Tasks
 
+<p align="center">
+    <img align="center" src="/docs/Ui.png" alt="list"/>
+</p>
+
 - View all your current tasks neatly numbered.
 - Use the `list` command to display your task list.
 
