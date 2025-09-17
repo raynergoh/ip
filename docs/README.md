@@ -11,13 +11,21 @@ Welcome to **Karl 🤖**, your friendly task management chatbot! This guide help
 
 ## Features
 
-### Add Tasks
+### Adding a Todo Task
 
-- Add tasks of various types to your task list with simple commands.
-- Examples:
-  - `todo read book` — Add a todo task.
-  - `deadline submit report /by 2025-09-20` — Add a deadline task.
-  - `event team meeting /at 2025-09-18 10:00` — Add an event task.
+- **Format:**
+```
+todo TASK_DESCRIPTION
+```
+- **Description:**
+
+Adds a todo task with the given description to your task list. Todo tasks have no deadlines or event times.
+
+- **Example:**
+```
+todo read book
+```
+
 
 ### List Tasks
 
