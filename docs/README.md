@@ -12,17 +12,13 @@ Welcome to **Karl 🤖**, your friendly task management chatbot! This guide help
 ## Features
 
 ### Adding a Todo Task
-
 ![Add Todo](./todo.png "Add Todo")
-
 - **Format:**
 ```
 todo TASK_DESCRIPTION
 ```
 - **Description:**
-
 Adds a todo task with the given description to your task list. Todo tasks have no deadlines or event times.
-
 - **Example:**
 ```
 todo read book
@@ -30,15 +26,13 @@ todo read book
 ---
 
 ### Adding a Deadline Task
-
+![Add Deadline](./deadline.png "Add Deadline")
 - **Format:**
 ```
 deadline TASK_DESCRIPTION /by YYYY-MM-DD
 ```
 - **Description:**
-
 Adds a deadline task with the given description and due date.
-
 - **Example:**
 ```
 deadline submit report /by 2025-09-20
@@ -46,49 +40,102 @@ deadline submit report /by 2025-09-20
 ---
 
 ### Adding an Event Task
-
+![Add Event](./event.png "Add Event")
 - **Format:**
 ```
-event TASK_DESCRIPTION /at YYYY-MM-DD HH:MM
+event TASK_DESCRIPTION /from YYYY-MM-DD /to YYYY-MM-DD
 ```
 - **Description:**
-
 Adds an event task with the given description and scheduled time.
-
 - **Example:**
 ```
-event team meeting /at 2025-09-18 10:00
+event hackathon /from 2025-08-27 /to 2025-08-31
 ```
+---
+
 ### List Tasks
+![List](./list.png "List")
+- **Format:**
+```
+list
+```
+- **Description:**
+Shows all tasks currently in your task list in numbered order.
+---
 
-<p align="center">
-    <img align="center" src="./Ui.png" alt="list"/>
-</p>
+### Marking a Task as Done
+![Mark](./mark.png "Mark")
+- **Format:**
+```
+mark TASK_NUMBER
+```
+- **Description:**
+Marks the task with the given number as done.
+- **Example:**
+```
+mark 3
+```
+---
 
-- View all your current tasks neatly numbered.
-- Use the `list` command to display your task list.
+### Unmarking a Task (Mark as Not Done)
+![Unmark](./unmark.png "Unmark")
+- **Format:**
+```
+unmark TASK_NUMBER
+```
+- **Description:**
+Marks the task with the given number as not done.
+- **Example:**
+```
+unmark 3
+```
+---
 
-### Mark Tasks Done / Undone
+### Deleting a Task
+![Delete](./delete.png "Delete")
+- **Format:**
+```
+delete TASK_NUMBER
+```
+- **Description:**
+Deletes the task with the given number from your list.
+- **Example:**
+```
+delete 2
+```
+---
 
-- Mark tasks as done to keep track of your progress.
-- Use `mark 3` to mark task 3 done.
-- Use `unmark 3` to mark task 3 undone.
+### Finding Tasks by Keyword
+![Find](./find.png "Find")
+- **Format:**
+```
+find KEYWORD
+```
+- **Description:**
+Lists all tasks containing the keyword in their description.
+- **Example:**
+```
+find book
+```
+---
 
-### Delete Tasks
+### Getting Help
+![Help](./help.png "Help")
+- **Format:**
+```
+help
+```
+- **Description:**
+Karl will provide you with a help message.
+---
 
-- Remove tasks you no longer need.
-- Use `delete 2` to delete task 2.
-
-### Search Tasks
-
-- Find tasks containing specific keywords.
-- Use `find book` to find tasks mentioning "book".
-
-### Help and Exit
-
-- Use `help` to see a list of available commands.
-- Use `bye` to exit the chatbot politely.
-
+### Exiting the App
+- **Format:**
+```
+bye
+```
+- **Description:**
+Exits the Karl chatbot application.
 ---
 
 ## Getting Started
@@ -101,7 +148,7 @@ event team meeting /at 2025-09-18 10:00
 
 ## Tips
 
-- Always check the command format for deadlines and events (use `/by` and `/at`).
+- Always check the command format for deadlines and events (use `/by`, `/from` and `/to`).
 - Use the `list` command often to review your tasks.
 - Mark tasks done as you complete them to stay organized.
 
