@@ -29,6 +29,7 @@ todo read book
 
 ### Adding a Deadline Task
 ![Add Deadline](./deadline.png "Add Deadline")
+
 **Format**
 ```
 deadline TASK_DESCRIPTION /by YYYY-MM-DD
@@ -44,13 +45,15 @@ deadline submit report /by 2025-09-20
 
 ### Adding an Event Task
 ![Add Event](./event.png "Add Event")
-- **Format:**
+
+**Format**
 ```
 event TASK_DESCRIPTION /from YYYY-MM-DD /to YYYY-MM-DD
 ```
-- **Description:**
+**Description**
+
 Adds an event task with the given description and scheduled time.
-- **Example:**
+**Example**
 ```
 event hackathon /from 2025-08-27 /to 2025-08-31
 ```
@@ -58,23 +61,27 @@ event hackathon /from 2025-08-27 /to 2025-08-31
 
 ### List Tasks
 ![List](./list.png "List")
-- **Format:**
+
+**Format**
 ```
 list
 ```
-- **Description:**
+**Description**
+
 Shows all tasks currently in your task list in numbered order.
 ---
 
 ### Marking a Task as Done
 ![Mark](./mark.png "Mark")
-- **Format:**
+
+**Format**
 ```
 mark TASK_NUMBER
 ```
-- **Description:**
+**Description**
+
 Marks the task with the given number as done.
-- **Example:**
+**Example**
 ```
 mark 3
 ```
@@ -82,13 +89,15 @@ mark 3
 
 ### Unmarking a Task (Mark as Not Done)
 ![Unmark](./unmark.png "Unmark")
-- **Format:**
+
+**Format**
 ```
 unmark TASK_NUMBER
 ```
-- **Description:**
+**Description**
+
 Marks the task with the given number as not done.
-- **Example:**
+**Example**
 ```
 unmark 3
 ```
@@ -96,13 +105,15 @@ unmark 3
 
 ### Deleting a Task
 ![Delete](./delete.png "Delete")
-- **Format:**
+
+**Format**
 ```
 delete TASK_NUMBER
 ```
-- **Description:**
+**Description**
+
 Deletes the task with the given number from your list.
-- **Example:**
+**Example**
 ```
 delete 2
 ```
@@ -110,13 +121,15 @@ delete 2
 
 ### Finding Tasks by Keyword
 ![Find](./find.png "Find")
-- **Format:**
+
+**Format**
 ```
 find KEYWORD
 ```
-- **Description:**
+**Description**
+
 Lists all tasks containing the keyword in their description.
-- **Example:**
+**Example**
 ```
 find book
 ```
@@ -124,20 +137,22 @@ find book
 
 ### Getting Help
 ![Help](./help.png "Help")
-- **Format:**
+
+**Format**
 ```
 help
 ```
-- **Description:**
+**Description**
+
 Karl will provide you with a help message.
 ---
 
 ### Exiting the App
-- **Format:**
+**Format**
 ```
 bye
 ```
-- **Description:**
+**Description**
 Exits the Karl chatbot application.
 ---
 
