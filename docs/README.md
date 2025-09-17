@@ -3,7 +3,8 @@
 Welcome to **Karl 🤖**, your friendly task management chatbot! This guide helps you get started and make the most of Karl’s features.
 
 ![Karl](/src/main/resources/images/karl.jpeg "Karl")
-<img align="center" src="/src/main/resources/images/karl.jpeg" alt="Karl/>
+
+<img align="center" src="/src/main/resources/images/karl.jpeg" alt="Karl"/>
 
 ---
 
