@@ -1,8 +1,8 @@
 # Karl Chatbot User Guide
 
 Welcome to **Karl 🤖**, your friendly task management chatbot! This guide helps you get started and make the most of Karl’s features.
-ip/src/main/resources/images/karl.jpeg
-![Karl](ip/src/main/resources/images/karl.jpeg "Karl")
+
+![Karl](/src/main/resources/images/karl.jpeg "Karl")
 
 ---
 
