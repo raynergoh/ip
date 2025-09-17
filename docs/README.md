@@ -41,10 +41,26 @@ Adds a deadline task with the given description and due date.
 ```
 deadline submit report /by 2025-09-20
 ```
+---
+
+### Adding an Event Task
+
+- **Format:**
+```
+event TASK_DESCRIPTION /at YYYY-MM-DD HH:MM
+```
+- **Description:**
+
+Adds an event task with the given description and scheduled time.
+
+- **Example:**
+```
+event team meeting /at 2025-09-18 10:00
+```
 ### List Tasks
 
 <p align="center">
-    <img align="center" src="/docs/Ui.png" alt="list"/>
+    <img align="center" src="./Ui.png" alt="list"/>
 </p>
 
 - View all your current tasks neatly numbered.
