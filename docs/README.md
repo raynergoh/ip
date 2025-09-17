@@ -3,7 +3,7 @@
 Welcome to **Karl 🤖**, your friendly task management chatbot! This guide helps you get started and make the most of Karl’s features.
 
 <p align="center">
-    <img align="center" src="/src/main/resources/images/karl.jpeg" alt="Karl"/>
+    <img align="center" src="./karl_camera.jpeg" alt="Karl"/>
 </p>
 
 
@@ -12,6 +12,8 @@ Welcome to **Karl 🤖**, your friendly task management chatbot! This guide help
 ## Features
 
 ### Adding a Todo Task
+
+![Add Todo](./todo.png "Add Todo")
 
 - **Format:**
 ```
